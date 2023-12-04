@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from time import time
 
 def firstPopulation(populationSize, numGenes):
     return [random.sample(range(numGenes), numGenes) for _ in range(populationSize)]
@@ -21,13 +22,11 @@ def mutate(individual):
     individual[index1], individual[index2] = individual[index2], individual[index1]
     return individual
 
-def geneticAlgorithm(matrix):
+def geneticAlgorithm(matrix, populationSize, crossoverRate, mutationRate, maxGenerations) :
+    
+    begin = time()
     
     numGenes, _ = matrix.shape
-    populationSize = 500
-    crossoverRate = 0.5
-    mutationRate = 0.05
-    maxGenerations = 8000
     
     population = firstPopulation(populationSize, numGenes)
     
@@ -54,4 +53,4 @@ def geneticAlgorithm(matrix):
     bestIndividual = max(population, key=lambda x: calculateFitness(x, matrix))
     bestFitness = 1 / calculateFitness(bestIndividual, matrix)
     
-    return bestFitness
+    return bestFitness, time() - begin

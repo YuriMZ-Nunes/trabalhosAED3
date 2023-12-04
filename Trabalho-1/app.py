@@ -14,9 +14,18 @@ def compairAlgorithm(file, runExact):
     matrix = getMatrixFromFile(file)
     target = re.search(r'_(\d+)\.', file)
     target = target.group(1)
-    begin = time()
-    totalCostAproximate = geneticAlgorithm(matrix)
-    executeTimeAproximate = time() - begin
+    
+    geneticParams = ((matrix, 100, 0.5, 0.05, 1000),
+                     (matrix, 200, 0.5, 0.05, 3000),
+                     (matrix, 500, 0.5, 0.05, 8000))
+    
+    totalCostAproximate = []
+    
+    for params in geneticParams:
+        results, timeExc = geneticAlgorithm(*params)
+        totalCostAproximate.append((results, timeExc))
+    
+    print(totalCostAproximate[0][0], totalCostAproximate[0][1], totalCostAproximate[1][0], totalCostAproximate[1][1], totalCostAproximate[2][0], totalCostAproximate[2][1])
     
     totalCostExact = 0
     executeTimeExact = 0
@@ -27,7 +36,7 @@ def compairAlgorithm(file, runExact):
     
     fileName = re.search(r'/(.*?)\.', file)
     fileName = fileName.group(1)
-    return fileName, target,totalCostAproximate, formatTime(executeTimeAproximate), totalCostExact, formatTime(executeTimeExact)
+    return fileName, target, totalCostAproximate[0][0], formatTime(totalCostAproximate[0][1]), totalCostAproximate[1][0], formatTime(totalCostAproximate[1][1]), totalCostAproximate[2][0], formatTime(totalCostAproximate[2][1]), totalCostExact, executeTimeExact
 
 def formatTime(time):
     
@@ -47,7 +56,12 @@ results = []
 for file, runExact in matrixFiles:
     results.append(compairAlgorithm(file, runExact))
 
-resultsTable = pd.DataFrame(results, columns=['Arquivo', 'Custo Ótimo', 'Custo\nGenético', 'Tempo de execução\nGenético', 'Custo exato', 'Tempo de execução\nexato'])
+resultsTable = pd.DataFrame(results, columns=['Arquivo', 
+                                              'Custo Ótimo', 
+                                              'Custo\nGenético Pequeno', 'Tempo\nGenético Pequeno', 
+                                              'Custo\nGenético Médio', 'Tempo\nGenético Médio', 
+                                              'Custo\nGenético Grande', 'Tempo\nGenético Grande', 
+                                              'Custo Exato', 'Tempo \nExato'])
 
 fig, ax = plt.subplots(figsize=(10, 5))
 #ax.axis('tight')
