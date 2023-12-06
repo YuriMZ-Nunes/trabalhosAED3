@@ -64,6 +64,10 @@ def formatTime(time):
         sec = int(time % 60)
         return f'{mins} minutos {sec} segundos'  
 
+# instalação de requisitos
+installRequirements()
+
+# inicio do trabalho
 matrixFiles = (('tsp_data/tsp1_253.txt', True),
                ('tsp_data/tsp2_1248.txt', True),
                ('tsp_data/tsp3_1194.txt', True),
@@ -77,6 +81,7 @@ print("Rodando...")
 for file, runExact in matrixFiles:
     results.append(compairAlgorithm(file, runExact))
 
+# geração da tabela
 resultsTable = pd.DataFrame(results, columns=['Arquivo', 
                                               'Custo Ótimo', 
                                               'Custo\nGenético Pequeno', 'Tempo\nGenético Pequeno', 
