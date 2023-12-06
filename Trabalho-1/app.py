@@ -89,7 +89,7 @@ resultsTable = pd.DataFrame(results, columns=['Arquivo',
                                               'Custo\nGenético Grande', 'Tempo\nGenético Grande', 
                                               'Custo Exato', 'Tempo \nExato'])
 
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots(figsize=(15, 5))
 ax.axis('off')
 imgTable = ax.table(cellText=resultsTable.values, colLabels=resultsTable.columns, cellLoc='center', loc='center', bbox=[-0.3, 0, 1.2, 1])
 imgTable.auto_set_font_size(False)
