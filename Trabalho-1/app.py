@@ -39,11 +39,12 @@ def compairAlgorithm(file, runExact):
     return fileName, target, totalCostAproximate[0][0], formatTime(totalCostAproximate[0][1]), totalCostAproximate[1][0], formatTime(totalCostAproximate[1][1]), totalCostAproximate[2][0], formatTime(totalCostAproximate[2][1]), totalCostExact, executeTimeExact
 
 def formatTime(time):
-    
-    mins = int(time // 60)
-    sec = int(time % 60)
-    
-    return f'{mins}m {sec}s'  
+    if (time // 60) < 1:
+        return f'{time:.3f} segundos'
+    else:
+        mins = int(time // 60)
+        sec = int(time % 60)
+        return f'{mins} minutos {sec} segundos'  
 
 matrixFiles = (('tsp_data/tsp1_253.txt', False),
                ('tsp_data/tsp2_1248.txt', False),
