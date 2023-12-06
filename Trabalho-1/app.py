@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import re
 from time import time
 from genetic import geneticAlgorithm
+from heldKarp import heldKarp
 
 def getMatrixFromFile(file):
     with open(file) as matrixFile:
@@ -15,6 +16,11 @@ def compairAlgorithm(file, runExact):
     target = re.search(r'_(\d+)\.', file)
     target = target.group(1)
     
+    fileName = re.search(r'/(.*?)\.', file)
+    fileName = fileName.group(1)
+    
+    print("Iniciando o arquivo " + fileName + ".")
+    
     geneticParams = ((matrix, 100, 0.5, 0.05, 1000),
                      (matrix, 200, 0.5, 0.05, 3000),
                      (matrix, 500, 0.5, 0.05, 8000))
@@ -25,18 +31,21 @@ def compairAlgorithm(file, runExact):
         results, timeExc = geneticAlgorithm(*params)
         totalCostAproximate.append((results, timeExc))
     
-    print(totalCostAproximate[0][0], totalCostAproximate[0][1], totalCostAproximate[1][0], totalCostAproximate[1][1], totalCostAproximate[2][0], totalCostAproximate[2][1])
-    
-    totalCostExact = 0
-    executeTimeExact = 0
+    print("Algoritmo genético para " + fileName + ": \033[92mok!\033[0m." )
     
     if runExact:
         begin = time()
-        # aqui tu roda o algoritmo exato pegando o caminho e o custo
+        totalCostExact = heldKarp(matrix)
+        executeTimeExact = time() - begin
+        print("Algoritmo exato para " + fileName + ": \033[92mok!\033[0m." )
+    else:
+        totalCostExact = 0
+        executeTimeExact = 0
+        print("Algoritmo exato para " + fileName + ": \033[91mignorado\033[0m." )
+        
+    print('\n')
     
-    fileName = re.search(r'/(.*?)\.', file)
-    fileName = fileName.group(1)
-    return fileName, target, totalCostAproximate[0][0], formatTime(totalCostAproximate[0][1]), totalCostAproximate[1][0], formatTime(totalCostAproximate[1][1]), totalCostAproximate[2][0], formatTime(totalCostAproximate[2][1]), totalCostExact, executeTimeExact
+    return fileName, target, totalCostAproximate[0][0], formatTime(totalCostAproximate[0][1]), totalCostAproximate[1][0], formatTime(totalCostAproximate[1][1]), totalCostAproximate[2][0], formatTime(totalCostAproximate[2][1]), totalCostExact, formatTime(executeTimeExact)
 
 def formatTime(time):
     if (time // 60) < 1:
@@ -46,13 +55,15 @@ def formatTime(time):
         sec = int(time % 60)
         return f'{mins} minutos {sec} segundos'  
 
-matrixFiles = (('tsp_data/tsp1_253.txt', False),
-               ('tsp_data/tsp2_1248.txt', False),
-               ('tsp_data/tsp3_1194.txt', False),
+matrixFiles = (('tsp_data/tsp1_253.txt', True),
+               ('tsp_data/tsp2_1248.txt', True),
+               ('tsp_data/tsp3_1194.txt', True),
                ('tsp_data/tsp4_7013.txt', False),
                ('tsp_data/tsp5_27603.txt', False))
 
 results = []
+
+print("Rodando...")
 
 for file, runExact in matrixFiles:
     results.append(compairAlgorithm(file, runExact))
