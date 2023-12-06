@@ -2,9 +2,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import re
+import subprocess
+import sys
 from time import time
-from genetic import geneticAlgorithm
-from heldKarp import heldKarp
+
+from algoritmos.genetic import geneticAlgorithm
+from algoritmos.heldKarp import heldKarp
+
+def installRequirements():
+    try:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
+    except subprocess.CalledProcessError:
+        print("Erro ao instalar as dependencias.")
 
 def getMatrixFromFile(file):
     with open(file) as matrixFile:
@@ -76,12 +85,12 @@ resultsTable = pd.DataFrame(results, columns=['Arquivo',
                                               'Custo Exato', 'Tempo \nExato'])
 
 fig, ax = plt.subplots(figsize=(10, 5))
-#ax.axis('tight')
 ax.axis('off')
 imgTable = ax.table(cellText=resultsTable.values, colLabels=resultsTable.columns, cellLoc='center', loc='center', bbox=[-0.3, 0, 1.2, 1])
 imgTable.auto_set_font_size(False)
 imgTable.set_fontsize(10)
 imgTable.scale(1, 2)
 
-plt.savefig('algorithmsCompair.png', dpi=200, bbox_inches='tight')
-plt.show()
+plt.savefig('relatorio/algorithmsCompair.png', dpi=200, bbox_inches='tight')
+
+print("Comparações geradas na pasta relatório.")
