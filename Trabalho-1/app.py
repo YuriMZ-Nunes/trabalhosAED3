@@ -37,7 +37,7 @@ def compairAlgorithm(file, runExact):
         begin = time()
         totalCostExact = heldKarp(matrix)
         executeTimeExact = time() - begin
-        print("Algoritmo exato para " + fileName + ": \033[92mok!\033[0m." )
+        print("Algoritmo exato para " + fileName + ": \033[92mok!\033[0m" )
     else:
         totalCostExact = 0
         executeTimeExact = 0
