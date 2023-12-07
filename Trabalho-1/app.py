@@ -62,7 +62,7 @@ def formatTime(time):
     else:
         mins = int(time // 60)
         sec = int(time % 60)
-        return f'{mins} minutos {sec} segundos'  
+        return f'{mins} min {sec} seg'  
 
 # instalação de requisitos
 installRequirements()
@@ -84,9 +84,9 @@ for file, runExact in matrixFiles:
 # geração da tabela
 resultsTable = pd.DataFrame(results, columns=['Arquivo', 
                                               'Custo Ótimo', 
-                                              'Custo\nGenético Pequeno', 'Tempo\nGenético Pequeno', 
-                                              'Custo\nGenético Médio', 'Tempo\nGenético Médio', 
-                                              'Custo\nGenético Grande', 'Tempo\nGenético Grande', 
+                                              'Custo\nGenético A', 'Tempo\nGenético A', 
+                                              'Custo\nGenético B', 'Tempo\nGenético B', 
+                                              'Custo\nGenético C', 'Tempo\nGenético C', 
                                               'Custo Exato', 'Tempo \nExato'])
 
 fig, ax = plt.subplots(figsize=(15, 5))
