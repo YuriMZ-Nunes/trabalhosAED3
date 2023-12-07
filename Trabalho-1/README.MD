@@ -11,3 +11,5 @@ python3 app.py
 A instalação de dependencias ja é feita de forma automática caso precise.
 
 Após a execução, os resultados estarão no arquivo _algoritmsCompair.png_, na pasta _relatorio_.
+
+github: https://github.com/YuriMZ-Nunes/trabalhosAED3/tree/main/Trabalho-1
